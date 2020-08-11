@@ -5,11 +5,11 @@ def auc_py(labels, preds):
     auc_sum = 0
     for i in pos_idx:
         for j in neg_idx:
-            if preds[i] > preds[j]:
-                auc_sum += 0.5
+            if preds[i] < preds[j]:
+                auc_sum += 1
             elif preds[i] == preds[j]:
                 auc_sum += 0.5
-    return auc_sum / len(preds)
+    return 1 - auc_sum / (len(pos_idx)*len(neg_idx))
 
 if __name__ == '__main__':
     label = [1,0,0,0,1,0,1,0]
@@ -20,6 +20,6 @@ if __name__ == '__main__':
     print('auc_py', auc_py(label, pre))
     print('sklearn', auc(fpr, tpr))
     '''
-    auc_py 0.5625
+    auc_py 0.5666666666666667
     sklearn 0.5666666666666667
     '''
